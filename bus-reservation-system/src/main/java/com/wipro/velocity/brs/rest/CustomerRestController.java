@@ -29,6 +29,8 @@ public class CustomerRestController {
 	
 	@Autowired
 	private CustomerRepository crepo;
+	
+	
 	@PostMapping("/customer")
     public Boolean loginDealer(@Validated @RequestBody Customer customer) 
     {
@@ -36,10 +38,10 @@ public class CustomerRestController {
         String email=customer.getEmail();
         String password=customer.getPassword();
         //System.out.println(email+password);
-        Customer d = urepo.findByEmail(email);//.orElseThrow(() -> new ResourceNotFoundException("Product not found for this id :: "));
+        Customer c = urepo.findByEmail(email);//.orElseThrow(() -> new ResourceNotFoundException("Product not found for this id :: "));
     //    System.out.println(d.getEmail() +d.getPassword() );
        
-        if(email.equals(d.getEmail()) && password.equals(d.getPassword()))
+        if(email.equals(c.getEmail()) && password.equals(c.getPassword()))
                 {
         //    System.out.println(d.getEmail() +d.getPassword() );
             a=true;

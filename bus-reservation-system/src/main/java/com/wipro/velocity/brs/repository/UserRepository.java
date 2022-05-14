@@ -4,18 +4,24 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
 
 import com.wipro.velocity.brs.model.Customer;
 import com.wipro.velocity.brs.model.CustomerAddress;
 
-public interface UserRepository extends JpaRepository<Customer, Long>{
+public interface UserRepository extends CrudRepository<Customer, Long>{
 	
-	public Customer findByEmail(String email);
+	private Customer findByEmail(String email) {
+		
+	
+		
 	
 	@Query("SELECT new com.wipro.velocity.brs.model.CustomerAddress(c.id,c.email,c.fname,c.lname,"
-            + "c.mobile,c.password,c.street,c.pincode,c.city,c.state) "
+            + "c.mobile,c.password,c.street,c.pincode,c.city,c.state)"
             + "FROM Customer c INNER JOIN c.address a")
 	List<CustomerAddress> fetchDealerInnerJoin();
-	
 
+	
+	
+}
 }

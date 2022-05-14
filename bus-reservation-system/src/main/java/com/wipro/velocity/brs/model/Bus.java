@@ -14,7 +14,7 @@ public class Bus {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="bus_no")
-	private String busNo;
+	private Long busNo;
 	
 	@Column(name="start_point")
 	private String startPoint;
