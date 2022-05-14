@@ -11,17 +11,5 @@ import com.wipro.velocity.brs.model.CustomerAddress;
 
 public interface UserRepository extends CrudRepository<Customer, Long>{
 	
-	private Customer findByEmail(String email) {
-		
-	
-		
-	
-	@Query("SELECT new com.wipro.velocity.brs.model.CustomerAddress(c.id,c.email,c.fname,c.lname,"
-            + "c.mobile,c.password,c.street,c.pincode,c.city,c.state)"
-            + "FROM Customer c INNER JOIN c.address a")
-	List<CustomerAddress> fetchDealerInnerJoin();
-
-	
-	
-}
-}
+	Customer findByEmail(String email);
+	}

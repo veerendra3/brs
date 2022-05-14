@@ -32,7 +32,7 @@ public class CustomerRestController {
 	
 	
 	@PostMapping("/customer")
-    public Boolean loginDealer(@Validated @RequestBody Customer customer) 
+    public Boolean loginCustomer(@Validated @RequestBody Customer customer) 
     {
         Boolean a=false;;
         String email=customer.getEmail();
@@ -51,7 +51,7 @@ public class CustomerRestController {
     }
 	
 	@PostMapping("/customers")
-    public CustomerAddress createDealer(@Validated @RequestBody CustomerAddress customer) {
+    public CustomerAddress createCustomer(@Validated @RequestBody CustomerAddress customer) {
 
  
 
@@ -79,10 +79,7 @@ public class CustomerRestController {
          return customer;
     }
 	
-	 @GetMapping("/customers")
-	    public List<CustomerAddress> getAllCustomers() {
-	         return  urepo.fetchDealerInnerJoin();
-	    }
+	
 
 
 }
