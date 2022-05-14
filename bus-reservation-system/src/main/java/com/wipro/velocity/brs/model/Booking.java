@@ -3,7 +3,11 @@ package com.wipro.velocity.brs.model;
 import java.sql.Date;
 import java.sql.Time;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -11,6 +15,10 @@ import javax.persistence.Table;
 @Entity
 @Table(name="bookings")
 public class Booking {
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="bookid")
+	private Long bookId;
 	
 	@OneToOne
 	@JoinColumn(name="customer_id")
@@ -21,7 +29,7 @@ public class Booking {
 	private Date bookedDate;
 	private Date journeyDate;
 	private Time journeyTime;
-	private Bus busNo;
+	private Long busNo;
 	private Long price;
 	
 	
@@ -61,10 +69,10 @@ public class Booking {
 	public void setJourneyTime(Time journeyTime) {
 		this.journeyTime = journeyTime;
 	}
-	public Bus getBusNo() {
+	public Long getBusNo() {
 		return busNo;
 	}
-	public void setBusNo(Bus busNo) {
+	public void setBusNo(Long busNo) {
 		this.busNo = busNo;
 	}
 	public Long getPrice() {
@@ -73,13 +81,5 @@ public class Booking {
 	public void setPrice(Long price) {
 		this.price = price;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 	
 }

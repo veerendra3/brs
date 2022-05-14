@@ -1,6 +1,7 @@
 package com.wipro.velocity.brs.model;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -36,7 +37,7 @@ public class Customer {
 	private String password;
 	
 	@OneToMany(mappedBy="customer", cascade=CascadeType.ALL)
-	private Booking bookings;
+	private List<Booking> bookings;
 	
 	@OneToOne(mappedBy="customer", cascade=CascadeType.ALL)
 	private Address address;
@@ -93,11 +94,11 @@ public class Customer {
         this.password = encodedString;
         }
 
-	public Booking getBookings() {
+	public List<Booking> getBookings() {
 		return bookings;
 	}
 
-	public void setBookings(Booking bookings) {
+	public void setBookings(List<Booking> bookings) {
 		this.bookings = bookings;
 	}
 

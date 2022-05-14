@@ -1,8 +1,11 @@
 package com.wipro.velocity.brs.rest;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,7 +48,7 @@ public class CustomerRestController {
         return a;
     }
 	
-	@PostMapping("/dealers")
+	@PostMapping("/customers")
     public CustomerAddress createDealer(@Validated @RequestBody CustomerAddress customer) {
 
  
@@ -54,14 +57,11 @@ public class CustomerRestController {
         {            
             new ResourceNotFoundException("User Already Exists");
         }*/
-//        System.out.println("Hello "+ dealer.getEmail()+" " +dealer.getPassword());
         Customer c=new Customer();
         c.setEmail(customer.getEmail());
         c.setFname(customer.getFname());
         c.setLname(customer.getLname());
         c.setPassword(customer.getPassword());
-//        System.out.println("Hello "+ customer.getEmail()+" " +dealer.getPassword());
-//        d.setDob(dealer.getDob());
         c.setMobile(customer.getMobile());
         
         Address a=new Address();
@@ -73,10 +73,14 @@ public class CustomerRestController {
                 
         c.setAddress(a);
         a.setCustomer(c);
-    //    lservice.saveDealer(dealer);
          urepo.save(c);
          return customer;
     }
+	
+	 @GetMapping("/customers")
+	    public List<CustomerAddress> getAllCustomers() {
+	         return  urepo.fetchDealerInnerJoin();
+	    }
 
 
 }
