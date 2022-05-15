@@ -11,18 +11,18 @@ import javax.persistence.Table;
 @Table(name="bus")
 public class Bus {
 	
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="bus_no")
 	private Long busNo;
 	
+	
 	@Column(name="start_point")
 	private String startPoint;
 	
+	
 	@Column(name="end_point")
 	private String endPoint;
-	
-	
-
 	
 }

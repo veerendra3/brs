@@ -24,6 +24,9 @@ public class Customer {
 	@Column(unique=true)
 	private String email;
 	
+	@OneToMany(mappedBy="customer", cascade=CascadeType.ALL)
+	private List<Wallet> wallet;
+	
 	@Column(name="first_name")
 	private String fname;
 	
@@ -110,7 +113,9 @@ public class Customer {
 		this.address = address;
 	}
 	
-	
+	public void addBooking(Booking booking) {
+		this.bookings.add(booking);
+	}
 	
 	
 	

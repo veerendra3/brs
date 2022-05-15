@@ -1,6 +1,6 @@
 package com.wipro.velocity.brs.model;
 
-import java.sql.Date;
+import java.util.Date;
 import java.sql.Time;
 
 import javax.persistence.Column;
@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -20,7 +21,7 @@ public class Booking {
 	@Column(name="bookid")
 	private Long bookId;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name="customer_id")
 	private Customer customer;
 	
@@ -31,8 +32,22 @@ public class Booking {
 	private Time journeyTime;
 	private Long busNo;
 	private Long price;
+	private String status;
 	
 	
+	
+	public Booking() {
+		// TODO Auto-generated constructor stub
+	}
+	public Long getBookId() {
+		return bookId;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	public Customer getCustomer() {
 		return customer;
 	}
