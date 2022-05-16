@@ -42,10 +42,10 @@ public class CustomerRestController {
         Boolean a=false;
         String email=customer.getEmail();
         String password=customer.getPassword();
-        //System.out.println(email+password);
+        System.out.println(email+" "+password);
         Customer c = urepo.findByEmail(email);//.orElseThrow(() -> new ResourceNotFoundException("Product not found for this id :: "));
     //    System.out.println(d.getEmail() +d.getPassword() );
-       
+       if(c!=null)
         if(email.equals(c.getEmail()) && password.equals(c.getPassword()))
                 {
         //    System.out.println(d.getEmail() +d.getPassword() );
@@ -55,15 +55,15 @@ public class CustomerRestController {
         return a;
     }
 	
-	@GetMapping("/getcustomer")
-	public List<Customer> getCustomer() {
-		List<Customer> customers=crepo.findAll();
-		for(Customer cust: customers) {
+	
+	@GetMapping("/getcustomers")
+	public List<CustomerAddress> getCustomer() {
+		List<CustomerAddress> customers=urepo.fetchDealerInnerJoin();
+		for(CustomerAddress cust: customers) {
 			System.out.println(cust.getEmail());
 		}
 //		Customer customer = crepo.findByEmail(email);
 		return customers;
-		
 	}
 	
 	
@@ -72,10 +72,6 @@ public class CustomerRestController {
 
  
 
-        /*if(urepo.findByEmail(dealer.getEmail())!=null)
-        {            
-            new ResourceNotFoundException("User Already Exists");
-        }*/
         Customer c=new Customer();
         c.setEmail(customer.getEmail());
         c.setFname(customer.getFname());
