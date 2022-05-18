@@ -1,61 +1,57 @@
 package com.wipro.velocity.brs.model;
 
+
+
 import java.util.Date;
-import java.sql.Time;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-
-@Entity
-@Table(name="bookings")
-public class Booking {
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="bookid")
+public class BookingsGet {
+	
 	private Long bookId;
-	
-	@ManyToOne
-	@JoinColumn(name="customer_id")
-	private Customer customer;
-	
 	private String start;
 	private String end;
 	private Date bookedDate;
 	private Date journeyDate;
-	private Long seat;
 	private Long busNo;
 	private Long price;
 	private String status;
+	private Long seat;
 	
 	
-	public Long getSeat() {
-		return seat;
+	public BookingsGet() {
+		
 	}
-	public void setSeat(Long seat) {
+	
+	
+
+	public BookingsGet(Long bookId, String start, String end, Date bookedDate, Date journeyDate, Long busNo, Long price,
+			String status, Long seat) {
+		this.bookId = bookId;
+		this.start = start;
+		this.end = end;
+		this.bookedDate = bookedDate;
+		this.journeyDate = journeyDate;
+		this.busNo = busNo;
+		this.price = price;
+		this.status = status;
 		this.seat = seat;
 	}
+
 	public Long getBookId() {
 		return bookId;
 	}
-	public String getStatus() {
-		return status;
+
+	public void setBookId(Long bookId) {
+		this.bookId = bookId;
 	}
-	public void setStatus(String status) {
-		this.status = status;
+
+	public Long getSeat() {
+		return seat;
 	}
-	public Customer getCustomer() {
-		return customer;
+
+	public void setSeat(Long seat) {
+		this.seat = seat;
 	}
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
+
 	public String getStart() {
 		return start;
 	}
@@ -93,5 +89,12 @@ public class Booking {
 	public void setPrice(Long price) {
 		this.price = price;
 	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
 	
 }

@@ -21,10 +21,12 @@ public class Wallet {
 	@ManyToOne
 	@JoinColumn(name="customer_id")
 	private Customer customer;
+	
 	private String pin;
 	private String cardType;
 	private String cardno;
-	private Date validity;
+	private String validity;
+	
 	public Long getWalletNo() {
 		return walletNo;
 	}
@@ -34,7 +36,7 @@ public class Wallet {
 	public Customer getCustomerId() {
 		return customer;
 	}
-	public void setCustomerId(Customer customerId) {
+	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
 	public String getPin() {
@@ -55,10 +57,10 @@ public class Wallet {
 	public void setCardno(String cardno) {
 		this.cardno = cardno;
 	}
-	public Date getValidity() {
+	public String getValidity() {
 		return validity;
 	}
-	public void setValidity(Date validity) {
+	public void setValidity(String validity) {
 		this.validity = validity;
 	}
 	

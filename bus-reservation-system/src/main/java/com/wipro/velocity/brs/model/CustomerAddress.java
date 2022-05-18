@@ -12,10 +12,20 @@ public class CustomerAddress {
 	private String pincode;
 	private String city;
 	private String state;
+	private String gender;
 	
 	
+	
+	
+	
+	public String getGender() {
+		return gender;
+	}
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
 	public CustomerAddress(Long id, String email, String fname, String lname, String mobile, String password,
-			String street, String pincode, String city, String state) {
+			 String gender,String street, String pincode, String city, String state) {
 		this.id = id;
 		this.email = email;
 		this.fname = fname;
@@ -26,9 +36,8 @@ public class CustomerAddress {
 		this.pincode = pincode;
 		this.city = city;
 		this.state = state;
+		this.gender = gender;
 	}
-	
-	
 	public Long getId() {
 		return id;
 	}

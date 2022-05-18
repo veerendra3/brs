@@ -14,7 +14,13 @@ public interface UserRepository extends CrudRepository<Customer, Long>{
 	public Customer findByEmail(String email);
 	
 	@Query("SELECT new com.wipro.velocity.brs.model.CustomerAddress(c.id,c.email,c.fname,c.lname,"
-            + "c.mobile,c.password,a.street,a.pincode,a.city,a.state) "
+            + "c.mobile,c.password,c.gender,a.street,a.pincode,a.city,a.state) "
             + "FROM Customer c INNER JOIN c.address a")
-	 List<CustomerAddress> fetchDealerInnerJoin();
+	 List<CustomerAddress> fetchCustomerInnerJoin();
+	
+	@Query("SELECT new com.wipro.velocity.brs.model.CustomerAddress(c.id,c.email,c.fname,c.lname,"
+            + "c.mobile,c.password,c.gender,a.street,a.pincode,a.city,a.state) "
+            + "FROM Customer c INNER JOIN c.address a where c.email=?1")
+	 CustomerAddress getCustomer(String email);
+	
 	}

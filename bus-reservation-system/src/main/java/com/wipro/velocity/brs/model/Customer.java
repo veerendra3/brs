@@ -24,6 +24,16 @@ public class Customer {
 	@Column(unique=true)
 	private String email;
 	
+	private String gender;
+	
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
 	@OneToMany(mappedBy="customer", cascade=CascadeType.ALL)
 	private List<Wallet> wallet;
 	
@@ -52,7 +62,7 @@ public class Customer {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
+	
 	public String getEmail() {
 		return email;
 	}
@@ -115,6 +125,14 @@ public class Customer {
 	
 	public void addBooking(Booking booking) {
 		this.bookings.add(booking);
+	}
+
+	public List<Wallet> getWallet() {
+		return wallet;
+	}
+
+	public void setWallet(List<Wallet> wallet) {
+		this.wallet = wallet;
 	}
 	
 	

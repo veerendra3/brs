@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,7 @@ import com.wipro.velocity.brs.model.Address;
 import com.wipro.velocity.brs.model.Booking;
 import com.wipro.velocity.brs.model.Customer;
 import com.wipro.velocity.brs.model.CustomerAddress;
+import com.wipro.velocity.brs.model.Wallet;
 import com.wipro.velocity.brs.repository.BookingRepository;
 import com.wipro.velocity.brs.repository.CustomerRepository;
 import com.wipro.velocity.brs.repository.UserRepository;
@@ -56,22 +58,23 @@ public class CustomerRestController {
     }
 	
 	
-	@GetMapping("/getcustomers")
-	public List<CustomerAddress> getCustomer() {
-		List<CustomerAddress> customers=urepo.fetchDealerInnerJoin();
-		for(CustomerAddress cust: customers) {
-			System.out.println(cust.getEmail());
-		}
-//		Customer customer = crepo.findByEmail(email);
-		return customers;
+	@GetMapping("/getcustomer/{email}")
+	public CustomerAddress getCustomer(@PathVariable String email) {
+//		List<CustomerAddress> customers=urepo.fetchDealerInnerJoin();
+//		CustomerAddress customer=null;
+//		for(CustomerAddress cust: customers) {
+//			if(cust.getEmail()==email) {
+//				
+//			System.out.println(cust.getEmail());
+//				customer=cust;}
+//		}
+		return urepo.getCustomer(email);
 	}
 	
 	
 	@PostMapping("/customers")
     public CustomerAddress createCustomer(@Validated @RequestBody CustomerAddress customer) {
-
- 
-
+		
         Customer c=new Customer();
         c.setEmail(customer.getEmail());
         c.setFname(customer.getFname());
@@ -92,46 +95,4 @@ public class CustomerRestController {
         return customer;
     }
 	
-	@PostMapping("/bookings")
-	public Booking newBooking(@RequestBody Booking newbooking, Customer customer) {
-		
-		Booking book = new Booking();
-		book.setBusNo(newbooking.getBusNo());
-		book.setCustomer(newbooking.getCustomer());
-		book.setStart(newbooking.getStart());
-		book.setEnd(newbooking.getEnd());
-		book.setPrice(newbooking.getPrice());
-		book.setStatus(newbooking.getStatus());
-		book.setBookedDate(newbooking.getBookedDate());
-		book.setJourneyDate(newbooking.getJourneyDate());
-		book.setJourneyTime(newbooking.getJourneyTime());
-		
-		brepo.save(book);
-		customer.addBooking(newbooking);
-		return book;
-		
-	}
-	
-	
-	@PostMapping("/getbookings")
-	public List<Booking> getBookings(@RequestBody Long custId){
-		
-		List<Booking> bookings = brepo.findAll();
-		List<Booking> booklist = new ArrayList<Booking>();
-		
-		for(Booking book: bookings) {
-			if(book.getCustomer().getId()==custId)
-				booklist.add(book);
-		}
-		
-		return booklist;
-	}
-	
-	
-	
-	
-	
-	
-
-
 }
