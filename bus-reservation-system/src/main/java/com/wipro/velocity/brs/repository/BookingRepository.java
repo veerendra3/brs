@@ -28,4 +28,7 @@ public interface BookingRepository extends CrudRepository<Booking, Long> {
 			+ " FROM Booking b where b.customer = ?1 and b.status='booked' and b.journeyDate < ?2")
 	List<BookingsGet> getBookings(Customer cust, Date date);
 	
+	@Query("SELECT b.seat FROM Booking b where b.busNo=?1")
+	List<Long> getBookedSeats(Long busId);
+	
 }

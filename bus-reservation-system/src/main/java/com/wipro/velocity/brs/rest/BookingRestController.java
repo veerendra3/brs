@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wipro.velocity.brs.model.Booking;
 import com.wipro.velocity.brs.model.BookingsGet;
+import com.wipro.velocity.brs.model.Bus;
 import com.wipro.velocity.brs.model.Customer;
 import com.wipro.velocity.brs.model.Routes;
 import com.wipro.velocity.brs.repository.BookingRepository;
@@ -91,6 +93,16 @@ public class BookingRestController {
 		Customer cust = urepo.findByEmail(email);
 		Date date=new Date();
 		return brepo.getBookings(cust,date);
+		
+	}
+	
+	@GetMapping("/getbooked/{busId}")
+	public List<Long> getBooked(@PathVariable Long busId){
+		System.out.println(busId);
+		
+		List<Long> booked = brepo.getBookedSeats(busId);
+		
+		return booked;
 		
 	}
 		
