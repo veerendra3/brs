@@ -30,11 +30,11 @@ public class BusRestController {
 	
 	@PostMapping("get")
 	public List<Bus> getBus(@RequestBody BusRequest bus){
-		System.out.println(bus.getStart()+" "+bus.getEnd());
+		System.out.println(bus.getSource()+" "+bus.getDestination());
 		
-	List<Bus> buses = busrepo.getBuses(bus.getStart(),bus.getEnd());
+	List<Bus> buses = busrepo.getBuses(bus.getSource(),bus.getDestination());
 	System.out.println("buses info fetched");
-	
+	System.out.println(buses);
 		return buses;
 		
 	}

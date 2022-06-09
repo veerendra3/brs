@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -60,14 +61,7 @@ public class CustomerRestController {
 	
 	@GetMapping("/getcustomer/{email}")
 	public CustomerAddress getCustomer(@PathVariable String email) {
-//		List<CustomerAddress> customers=urepo.fetchDealerInnerJoin();
-//		CustomerAddress customer=null;
-//		for(CustomerAddress cust: customers) {
-//			if(cust.getEmail()==email) {
-//				
-//			System.out.println(cust.getEmail());
-//				customer=cust;}
-//		}
+		System.out.println("customer details requested");
 		return urepo.getCustomer(email);
 	}
 	
@@ -88,11 +82,37 @@ public class CustomerRestController {
         a.setPincode(customer.getPincode());
         a.setState(customer.getState());
         	
-        	
         c.setAddress(a);
         a.setCustomer(c);
         urepo.save(c);
         return customer;
     }
+	
+	@PostMapping("/changepass/{email}/{pass}")
+	public Customer changePassword(@PathVariable String pass,@PathVariable String email) {
+		System.out.println(email);
+		System.out.println(pass);
+		Customer cust = urepo.findByEmail(email);
+		cust.setPassword(pass);
+		urepo.save(cust);
+		return cust;
+	}
+	
+	@PutMapping("/update/{email}")
+	public void updateProfile(@PathVariable String email, @Validated @RequestBody CustomerAddress customer ) {
+		Customer cust = urepo.findByEmail(email);
+		
+		Address address = cust.getAddress();
+		cust.setFname(customer.getFname());
+		cust.setLname(customer.getLname());
+		cust.setMobile(customer.getMobile());
+		address.setCity(customer.getCity());
+		address.setState(customer.getState());
+		address.setStreet(customer.getStreet());
+		address.setPincode(customer.getPincode());
+		
+		urepo.save(cust);
+		
+	}
 	
 }

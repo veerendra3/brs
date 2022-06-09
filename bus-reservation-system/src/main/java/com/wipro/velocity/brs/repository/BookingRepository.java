@@ -16,19 +16,30 @@ public interface BookingRepository extends CrudRepository<Booking, Long> {
 	
 	public List<Booking> findAll();
 	
-	@Query("SELECT new com.wipro.velocity.brs.model.BookingsGet(b.bookId,b.start, b.end, b.bookedDate, b.journeyDate, b.busNo,b.price, b.status, b.seat)"
+	@Query("SELECT new com.wipro.velocity.brs.model.BookingsGet(b.bookId,b.source, b.destination, b.bookedDate, b.journeyDate, b.busNo,b.price, b.status, b.seat)"
 			+ " FROM Booking b where b.customer = ?1 and b.journeyDate > ?2")
 	List<BookingsGet> getUpcomingBookings(Customer cust,Date date);
 	
-	@Query("SELECT new com.wipro.velocity.brs.model.BookingsGet(b.bookId,b.start, b.end, b.bookedDate, b.journeyDate, b.busNo,b.price, b.status, b.seat)"
+	@Query("SELECT new com.wipro.velocity.brs.model.BookingsGet(b.bookId,b.source, b.destination, b.bookedDate, b.journeyDate, b.busNo,b.price, b.status, b.seat)"
 			+ " FROM Booking b where b.customer = ?1 and b.status='cancelled'")
 	List<BookingsGet> getCancelledBookings(Customer cust);
 	
-	@Query("SELECT new com.wipro.velocity.brs.model.BookingsGet(b.bookId,b.start, b.end, b.bookedDate, b.journeyDate, b.busNo,b.price, b.status, b.seat)"
+	@Query("SELECT new com.wipro.velocity.brs.model.BookingsGet(b.bookId,b.source, b.destination, b.bookedDate, b.journeyDate, b.busNo,b.price, b.status, b.seat)"
 			+ " FROM Booking b where b.customer = ?1 and b.status='booked' and b.journeyDate < ?2")
 	List<BookingsGet> getBookings(Customer cust, Date date);
 	
 	@Query("SELECT b.seat FROM Booking b where b.busNo=?1")
 	List<Long> getBookedSeats(Long busId);
 	
+	@Query("SELECT SUM(b.price)"+ "FROM Booking b WHERE b.bookedDate>?1")
+	Long getProfits(Date date);
+
+	@Query("SELECT COUNT(b.price)"+ "FROM Booking b WHERE b.bookedDate>?1")
+	Long getLMB(Date date);
+	
+	@Query("SELECT SUM(b.price)"+ "FROM Booking b WHERE b.bookedDate>?1")
+	Long getLWProfits(Date date);
+
+	@Query("SELECT COUNT(b.price)"+ "FROM Booking b WHERE b.bookedDate>?1")
+	Long getLWB(Date date);
 }

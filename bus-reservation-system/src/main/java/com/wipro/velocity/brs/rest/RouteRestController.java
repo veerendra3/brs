@@ -27,15 +27,15 @@ public class RouteRestController {
 	@Autowired
 	RouteRepository rrepo;
 	
-	@GetMapping("/get")
-	public Boolean createRoutes() {
-		for(int i=0;i<routes.length;i++) {
-			Routes r=new Routes();
-			r.setRoute(routes[i]);
-			r.setFare(fares[i]);
-			r.setUseCount(0L);
-			rrepo.save(r);
-		}
-		return true;
-	}
+//	@GetMapping("/get")
+//	public Boolean createRoutes() {
+//		for(int i=0;i<routes.length;i++) {
+//			Routes r=new Routes();
+//			r.setRoute(routes[i]);
+//			r.setFare(fares[i]);
+//			r.setUseCount(0L);
+//			rrepo.save(r);
+//		}
+//		return true;
+//	}
 }

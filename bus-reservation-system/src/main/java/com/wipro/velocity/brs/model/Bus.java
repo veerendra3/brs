@@ -18,8 +18,8 @@ public class Bus {
 	@Column(name="bus_no")
 	private Long busNo;
 	
-	private String start;
-	private String end;
+	private String source;
+	private String destination;
 	
 	@Column(name="arrival_time")
 	private String arrival;
@@ -30,10 +30,15 @@ public class Bus {
 	private Long price;
 
 	
-	public Bus(Long busNo, String start, String end, String arrival, String departure, Long price) {
+	public Bus() {
+		// TODO Auto-generated constructor stub
+	}
+
+
+	public Bus(Long busNo, String source, String destination, String arrival, String departure, Long price) {
 		this.busNo = busNo;
-		this.start = start;
-		this.end = end;
+		this.source = source;
+		this.destination = destination;
 		this.arrival = arrival;
 		this.departure = departure;
 		this.price = price;
@@ -56,21 +61,27 @@ public class Bus {
 		this.busNo = busNo;
 	}
 
-	public String getStart() {
-		return start;
+	
+
+	public String getSource() {
+		return source;
 	}
 
-	public void setStart(String start) {
-		this.start = start;
+
+	public void setSource(String source) {
+		this.source = source;
 	}
 
-	public String getEnd() {
-		return end;
+
+	public String getDestination() {
+		return destination;
 	}
 
-	public void setEnd(String end) {
-		this.end = end;
+
+	public void setDestination(String destination) {
+		this.destination = destination;
 	}
+
 
 	public String getArrival() {
 		return arrival;

@@ -25,9 +25,9 @@ public class Booking {
 	@JoinColumn(name="customer_id")
 	private Customer customer;
 	
-	private String start;
-	private String end;
-	private Date bookedDate;
+	private String source;
+	private String destination;
+	public Date bookedDate;
 	private Date journeyDate;
 	private Long seat;
 	private Long busNo;
@@ -56,23 +56,25 @@ public class Booking {
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
-	public String getStart() {
-		return start;
+	
+	public String getSource() {
+		return source;
 	}
-	public void setStart(String start) {
-		this.start = start;
+	public void setSource(String source) {
+		this.source = source;
 	}
-	public String getEnd() {
-		return end;
+	public String getDestination() {
+		return destination;
 	}
-	public void setEnd(String end) {
-		this.end = end;
+	public void setDestination(String destination) {
+		this.destination = destination;
 	}
 	public Date getBookedDate() {
 		return bookedDate;
 	}
-	public void setBookedDate(Date bookedDate) {
-		this.bookedDate = bookedDate;
+	public void setBookedDate() {
+		Date date= new Date();
+		this.bookedDate = date;
 	}
 	public Date getJourneyDate() {
 		return journeyDate;

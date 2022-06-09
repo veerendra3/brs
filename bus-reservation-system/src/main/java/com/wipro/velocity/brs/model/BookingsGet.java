@@ -7,8 +7,8 @@ import java.util.Date;
 public class BookingsGet {
 	
 	private Long bookId;
-	private String start;
-	private String end;
+	private String source;
+	private String destination;
 	private Date bookedDate;
 	private Date journeyDate;
 	private Long busNo;
@@ -21,13 +21,11 @@ public class BookingsGet {
 		
 	}
 	
-	
-
-	public BookingsGet(Long bookId, String start, String end, Date bookedDate, Date journeyDate, Long busNo, Long price,
+	public BookingsGet(Long bookId, String source, String destination, Date bookedDate, Date journeyDate, Long busNo, Long price,
 			String status, Long seat) {
 		this.bookId = bookId;
-		this.start = start;
-		this.end = end;
+		this.source = source;
+		this.destination = destination;
 		this.bookedDate = bookedDate;
 		this.journeyDate = journeyDate;
 		this.busNo = busNo;
@@ -52,18 +50,23 @@ public class BookingsGet {
 		this.seat = seat;
 	}
 
-	public String getStart() {
-		return start;
+	
+	public String getSource() {
+		return source;
 	}
-	public void setStart(String start) {
-		this.start = start;
+
+	public void setSource(String source) {
+		this.source = source;
 	}
-	public String getEnd() {
-		return end;
+
+	public String getDestination() {
+		return destination;
 	}
-	public void setEnd(String end) {
-		this.end = end;
+
+	public void setDestination(String destination) {
+		this.destination = destination;
 	}
+
 	public Date getBookedDate() {
 		return bookedDate;
 	}

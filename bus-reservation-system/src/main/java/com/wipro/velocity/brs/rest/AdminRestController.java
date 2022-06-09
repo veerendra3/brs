@@ -1,5 +1,7 @@
 package com.wipro.velocity.brs.rest;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +13,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wipro.velocity.brs.model.Admin;
+import com.wipro.velocity.brs.model.Booking;
+import com.wipro.velocity.brs.model.BookingsGet;
 import com.wipro.velocity.brs.model.Customer;
+import com.wipro.velocity.brs.model.CustomerAddress;
 import com.wipro.velocity.brs.model.Routes;
 import com.wipro.velocity.brs.repository.AdminRepository;
+import com.wipro.velocity.brs.repository.BookingRepository;
 import com.wipro.velocity.brs.repository.RouteRepository;
+import com.wipro.velocity.brs.repository.UserRepository;
 
 @RestController
 @RequestMapping(value="/api/admin")
@@ -25,10 +32,16 @@ public class AdminRestController {
 	AdminRepository arepo;
 	
 	@Autowired
+	BookingRepository brepo;
+	
+	@Autowired
+	UserRepository urepo;
+	
+	@Autowired
 	RouteRepository rrepo;
 	
 	@PostMapping("/login")
-	public Boolean logInAdmin(Admin admin) {
+	public Boolean logInAdmin(@RequestBody Admin admin) {
 		
 		Boolean r =false;
 		String email=admin.getEmail();
@@ -45,10 +58,9 @@ public class AdminRestController {
 		
 	}
 	
-	@PostMapping("/create")
+	@PostMapping("/signup")
 	public void createAdmin(@RequestBody Admin admin) {
 		arepo.save(admin);
-		
 	}
 	
 	@GetMapping("/top")
@@ -57,4 +69,54 @@ public class AdminRestController {
 		List<Routes> routes= rrepo.findTop5ByOrderByUseCountDesc();
 		return routes;
 	}
+
+	@GetMapping("/inactive")
+	public List<CustomerAddress> inactive(){
+		List<CustomerAddress> customers = urepo.getCustomers();
+		List<CustomerAddress> inactive = new ArrayList();
+		for(CustomerAddress cust:customers) {
+			Long count = urepo.getBookingsCount(cust.getId());
+			
+			if(count==0L)
+				inactive.add(cust);
+		}
+		return inactive;
+	}
+	
+	@GetMapping("/LMprofits")
+	public Long getProfits() {
+		Date newDate=new Date();
+		Long profits;
+		newDate.setMonth(newDate.getMonth()-1);
+		profits= brepo.getProfits(newDate);
+
+		return profits;
+	}
+	
+	@GetMapping("LMB")
+	public Long lastMonthBookings() {
+		Date newDate=new Date();
+		Long bookings;
+		newDate.setMonth(newDate.getMonth()-1);
+		return brepo.getLMB(newDate);
+	}
+	
+	@GetMapping("/LWprofits")
+	public Long LWProfits() {
+		Date newDate=new Date();
+		Long profits;
+		newDate.setDate(newDate.getDate()-7);
+		profits= brepo.getProfits(newDate);
+		
+		return profits;
+	}
+	
+	@GetMapping("LWB")
+	public Long LWBookings() {
+		Date newDate=new Date();
+		Long bookings;
+		newDate.setDate(newDate.getDate()-7);
+		return brepo.getLWB(newDate);
+	}
+	
 }

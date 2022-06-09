@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +21,7 @@ import com.wipro.velocity.brs.model.Bus;
 import com.wipro.velocity.brs.model.Customer;
 import com.wipro.velocity.brs.model.Routes;
 import com.wipro.velocity.brs.repository.BookingRepository;
+import com.wipro.velocity.brs.repository.BusRepository;
 import com.wipro.velocity.brs.repository.RouteRepository;
 import com.wipro.velocity.brs.repository.UserRepository;
 
@@ -37,16 +39,17 @@ public class BookingRestController {
 	@Autowired
 	RouteRepository rrepo;
 	
+	@Autowired
+	BusRepository busrepo;
+	
 	@PostMapping("/create/{email}")
 	public Booking newBooking(@RequestBody Booking newbooking,@PathVariable String email) {
 		
+		System.out.println("new booking received");
 		
 		Customer cust = urepo.findByEmail(email);
 		List<Booking> bookings;
 		
-		Routes r = rrepo.findByRoute(newbooking.getStart()+" "+newbooking.getEnd());
-		r.setUseCount(r.getUseCount()+1L);
-		rrepo.save(r);
 		
 		if(cust.getBookings()!=null) {
 					bookings= cust.getBookings();
@@ -54,13 +57,28 @@ public class BookingRestController {
 			else {
 				bookings = new ArrayList<Booking>();
 			}
+		
+		Long busno=newbooking.getBusNo();
+		
+		Bus bus=busrepo.findByBusNo(busno);
+		
+		newbooking.setPrice(bus.getPrice());
+		newbooking.setSource(bus.getSource());
+		newbooking.setDestination(bus.getDestination());
+		newbooking.setStatus("booked");
+		
 			newbooking.setCustomer(cust);
-			
+			newbooking.bookedDate=new Date();
 			brepo.save(newbooking);
 			bookings.add(newbooking);
 			
 			cust.setBookings(bookings);
 			urepo.save(cust);
+			Routes r = rrepo.findRoute(newbooking.getSource(),newbooking.getDestination());
+			System.out.println(newbooking.getSource()+" "+newbooking.getDestination());
+			
+			r.setUseCount(r.getUseCount()+1L);
+			rrepo.save(r);
 			return newbooking;
 		
 	}
@@ -72,7 +90,6 @@ public class BookingRestController {
 		Customer cust = urepo.findByEmail(email);
 		
 		Date date=new Date();
-		
 		
 		return brepo.getUpcomingBookings(cust , date);
 		
@@ -90,6 +107,7 @@ public class BookingRestController {
 	@GetMapping("/get/{email}")
 	public List<BookingsGet> getBookings(@PathVariable String email){
 		
+		
 		Customer cust = urepo.findByEmail(email);
 		Date date=new Date();
 		return brepo.getBookings(cust,date);
@@ -103,6 +121,13 @@ public class BookingRestController {
 		List<Long> booked = brepo.getBookedSeats(busId);
 		
 		return booked;
+		
+	}
+	
+	@DeleteMapping("/cancel/{id}")
+	public void cancelBooking(@PathVariable Long id) {
+		
+		brepo.deleteById(id);
 		
 	}
 		
