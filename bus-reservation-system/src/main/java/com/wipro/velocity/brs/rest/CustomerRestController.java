@@ -18,7 +18,6 @@ import com.wipro.velocity.brs.model.Address;
 import com.wipro.velocity.brs.model.Booking;
 import com.wipro.velocity.brs.model.Customer;
 import com.wipro.velocity.brs.model.CustomerAddress;
-import com.wipro.velocity.brs.model.Wallet;
 import com.wipro.velocity.brs.repository.BookingRepository;
 import com.wipro.velocity.brs.repository.CustomerRepository;
 import com.wipro.velocity.brs.repository.UserRepository;

@@ -34,8 +34,7 @@ public class Customer {
 		this.gender = gender;
 	}
 
-	@OneToMany(mappedBy="customer", cascade=CascadeType.ALL)
-	private List<Wallet> wallet;
+
 	
 	@Column(name="first_name")
 	private String fname;
@@ -127,16 +126,6 @@ public class Customer {
 		this.bookings.add(booking);
 	}
 
-	public List<Wallet> getWallet() {
-		return wallet;
-	}
-
-	public void setWallet(List<Wallet> wallet) {
-		this.wallet = wallet;
-	}
-	
-	
-	
 	
 	
 }
