@@ -2,6 +2,7 @@ package com.wipro.velocity.brs.model;
 
 
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class BookingsGet {
@@ -73,13 +74,17 @@ public class BookingsGet {
 	public void setBookedDate(Date bookedDate) {
 		this.bookedDate = bookedDate;
 	}
+	
+	
+
 	public Date getJourneyDate() {
 		return journeyDate;
 	}
+
 	public void setJourneyDate(Date journeyDate) {
 		this.journeyDate = journeyDate;
 	}
-	
+
 	public Long getBusNo() {
 		return busNo;
 	}

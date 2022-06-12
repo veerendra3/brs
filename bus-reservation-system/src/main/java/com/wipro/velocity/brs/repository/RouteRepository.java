@@ -17,4 +17,13 @@ public interface RouteRepository extends JpaRepository<Routes,Long>{
 			nativeQuery=true)
 	Routes findRoute(String source, String destination);
 	
+	
+	@Query(value="Select DISTINCT source FROM routes",
+			nativeQuery=true)
+	List<String> findSources();
+	
+	@Query(value="Select DISTINCT destination FROM routes",
+			nativeQuery=true)
+	List<String> findDestinations();
 }
+

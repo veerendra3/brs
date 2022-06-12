@@ -1,8 +1,13 @@
 package com.wipro.velocity.brs.rest;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.time.*;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -77,6 +82,7 @@ public class BookingRestController {
 			Routes r = rrepo.findRoute(newbooking.getSource(),newbooking.getDestination());
 			System.out.println(newbooking.getSource()+" "+newbooking.getDestination());
 			
+			
 			r.setUseCount(r.getUseCount()+1L);
 			rrepo.save(r);
 			return newbooking;
@@ -107,28 +113,60 @@ public class BookingRestController {
 	@GetMapping("/get/{email}")
 	public List<BookingsGet> getBookings(@PathVariable String email){
 		
-		
 		Customer cust = urepo.findByEmail(email);
 		Date date=new Date();
 		return brepo.getBookings(cust,date);
 		
 	}
 	
-	@GetMapping("/getbooked/{busId}")
-	public List<Long> getBooked(@PathVariable Long busId){
-		System.out.println(busId);
-		
-		List<Long> booked = brepo.getBookedSeats(busId);
-		
-		return booked;
-		
-	}
 	
+	@GetMapping("/getbooked/{busId}/{jdate}")
+	public List<Long> getBooked(@PathVariable Long busId, @PathVariable String jdate) throws ParseException{
+		
+		System.out.println(jdate+"isnlksdnckd");
+		
+		
+		System.out.println(jdate);
+		List<Booking> booked = brepo.getBookedSeats(busId);
+		List<Long> bookedSeats = new ArrayList<Long>();
+		for(Booking b:booked) {
+			System.out.println(b.getJourneyDate());
+			DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+			String date=formatter.format(b.getJourneyDate());
+//			String fdate = date.substring(0,10);
+//			System.out.println("fdate"+fdate);
+			
+			if(jdate.equals(date))
+				bookedSeats.add(b.getSeat());
+			
+		}
+		
+		return bookedSeats;
+		}
+		
+		
+		
 	@DeleteMapping("/cancel/{id}")
 	public void cancelBooking(@PathVariable Long id) {
 		
-		brepo.deleteById(id);
+		String source=brepo.getSource(id);
+		String dest=brepo.getDestination(id);
+			
+	Routes route=rrepo.findRoute(source, dest);
+	route.setUseCount(route.getUseCount()-1L);
+	rrepo.save(route);
+		
+		Booking book = brepo.getBookById(id);
+		book.setStatus("cancelled");
+		brepo.save(book);
 		
 	}
+	
+	@GetMapping("/latest")
+	public BookingsGet getLatest() {
+		List<BookingsGet> bookings = brepo.getLatest();
+		return bookings.get(0);
+	}
+	
 		
 }

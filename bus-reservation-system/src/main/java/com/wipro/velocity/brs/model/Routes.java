@@ -16,7 +16,7 @@ public class Routes {
 	private String source;
 	private String destination;
 	private Long useCount;
-	private Long fare;
+	
 	
 	public String getSource() {
 		return source;
@@ -48,10 +48,5 @@ public class Routes {
 	public void setUseCount(Long useCount) {
 		this.useCount = useCount;
 	}
-	public Long getFare() {
-		return fare;
-		}
-	public void setFare(Long fare) {
-		this.fare = fare;
-	}
+	
 }

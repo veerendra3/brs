@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +21,7 @@ import com.wipro.velocity.brs.model.CustomerAddress;
 import com.wipro.velocity.brs.model.Routes;
 import com.wipro.velocity.brs.repository.AdminRepository;
 import com.wipro.velocity.brs.repository.BookingRepository;
+import com.wipro.velocity.brs.repository.BusRepository;
 import com.wipro.velocity.brs.repository.RouteRepository;
 import com.wipro.velocity.brs.repository.UserRepository;
 
@@ -39,6 +41,9 @@ public class AdminRestController {
 	
 	@Autowired
 	RouteRepository rrepo;
+	
+	@Autowired
+	BusRepository busrepo;
 	
 	@PostMapping("/login")
 	public Boolean logInAdmin(@RequestBody Admin admin) {
@@ -119,4 +124,11 @@ public class AdminRestController {
 		return brepo.getLWB(newDate);
 	}
 	
+	
+	@GetMapping("delete/{id}")
+	public void deleteBus(@PathVariable Long id) {
+		busrepo.deleteById(id);
+	}
+	
 }
+	
